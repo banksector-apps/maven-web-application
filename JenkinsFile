@@ -9,6 +9,7 @@ node{
     
     def mavenHome = tool name: "maven3.8.5"
     
+    try{
     stage('CheckoutCode'){
     git branch: 'development', credentialsId: 'd2b7fc32-2a82-4051-87ef-b8b31f29cba7', url: 'https://github.com/banksector-apps/maven-web-application.git'
     }
@@ -32,4 +33,40 @@ node{
 }
  
 */
+}//try closing
+catch(e){
+currentBuild.result = "FAILURE"
+}
+finally{
+sendslacknotifications('currentBuild.result')
+}
+
+}
+
+//slack send Notifications
+
+def sendSlackNotifications(String buildStatus = 'STARTED') {
+  // build status of null means successful
+  buildStatus =  buildStatus ?: 'SUCCESSFUL'
+
+  // Default values
+  def colorName = 'RED'
+  def colorCode = '#FF0000'
+  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+  def summary = "${subject} (${env.BUILD_URL})"
+
+  // Override default values based on build status
+  if (buildStatus == 'STARTED') {
+    color = 'YELLOW'
+    colorCode = '#FFFF00'
+  } else if (buildStatus == 'SUCCESSFUL') {
+    color = 'GREEN'
+    colorCode = '#00FF00'
+  } else {
+    color = 'RED'
+    colorCode = '#FF0000'
+  }
+
+  // Send notifications
+  slackSend (color: colorCode, message: summary)
 }
