@@ -1,0 +1,35 @@
+node{
+    
+ properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '5', numToKeepStr: '')), [$class: 'JobLocalConfiguration', changeReasonComment: ''], pipelineTriggers([pollSCM('* * * * *')])])
+ 
+    echo "The Job name is: ${env.JOB_NAME}"
+    echo "The Node name is: ${env.NODE_NAME}"
+    echo "The Build Number is: ${env.BUILD_NUMBER}"
+    echo "The Jenkins Home Directory is: ${JENKINS_HOME}"
+    
+    def mavenHome = tool name: "maven3.8.5"
+    
+    stage('CheckoutCode'){
+    git branch: 'development', credentialsId: 'd2b7fc32-2a82-4051-87ef-b8b31f29cba7', url: 'https://github.com/banksector-apps/maven-web-application.git'
+    }
+    
+    stage('Build'){
+    sh "${mavenHome}/bin/mvn clean package"    
+    }
+ /*   
+    stage('ExecuteSonarqubeReport'){
+    sh "${mavenHome}/bin/mvn sonar:sonar"    
+    }
+    
+    stage('UploadArtifactsIntoNexus'){
+    sh "${mavenHome}/bin/mvn deploy"
+    }
+ 
+ stage('DeployAppIntoTomcatServer'){
+ sshagent(['dbe7cb08-df20-4859-9a2b-d963b2e30409']) {
+ sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.22.82:/opt/apache-tomcat-9.0.70/webapps"
+} 
+}
+ 
+*/
+}
