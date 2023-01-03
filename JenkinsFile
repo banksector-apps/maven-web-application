@@ -38,7 +38,7 @@ catch(e){
 currentBuild.result = "FAILURE"
 }
 finally{
-sendslacknotifications('currentBuild.result')
+sendSlackNotifications('currentBuild.result')
 }
 
 }
@@ -67,7 +67,7 @@ def sendSlackNotifications(String buildStatus = 'STARTED') {
     colorCode = '#FF0000'
   }
 
-  // Send notifications
-  slackSend (color: colorCode, message: summary)
+  // Send Notifications
+  SlackSend (color: colorCode, message: summary)
 }
   
