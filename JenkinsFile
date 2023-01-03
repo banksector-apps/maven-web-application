@@ -35,7 +35,7 @@ node{
 */
 }//try closing
 catch(e){
-currentBuild.result = "SUCCESS"
+currentBuild.result = "FAILURE"
 }
 finally{
 sendslacknotifications('currentBuild.result')
@@ -43,7 +43,7 @@ sendslacknotifications('currentBuild.result')
 
 }
 
-//slack send Notifications
+//Slack send Notifications
 
 def sendSlackNotifications(String buildStatus = 'STARTED') {
   // build status of null means successful
