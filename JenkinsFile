@@ -36,7 +36,6 @@ node{
 }//try closing
  catch(e){
 currentBuild.result = "FAILURE"
-throw e
 }
  finally{
 sendSlackNotifications('currentBuild.result')
