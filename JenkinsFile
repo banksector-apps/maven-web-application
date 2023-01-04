@@ -37,7 +37,7 @@ node{
  catch(e){
 currentBuild.result = "FAILURE"
 }
-} finally{
+ finally{
 sendSlackNotifications('currentBuild.result')
 }
 
