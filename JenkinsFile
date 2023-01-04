@@ -36,6 +36,7 @@ node{
 }//try closing
  catch(e){
 currentBuild.result = "FAILURE"
+throw e
 }
  finally{
 sendSlackNotifications('currentBuild.result')
@@ -57,7 +58,7 @@ def sendSlackNotifications(String buildStatus = 'STARTED') {
 
   // Override default values based on build status
   if (buildStatus == 'STARTED') {
-    colorName = 'ORANGE'
+    colorName = 'YELLOW'
     colorCode = '#FFFF00'
   } else if (buildStatus == 'SUCCESSFUL') {
     colorName = 'GREEN'
