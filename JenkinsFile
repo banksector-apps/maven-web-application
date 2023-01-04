@@ -38,9 +38,9 @@ node{
 currentBuild.result = "FAILURE"
 }
  finally{
+ // Success or failure, always send notifications
 sendSlackNotifications('currentBuild.result')
 }
-
 }
 
 //Slack send Notifications
