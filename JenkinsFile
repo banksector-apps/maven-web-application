@@ -33,7 +33,7 @@ node{
 }
  
 */
-}//try closing
+}
  catch(e){
 currentBuild.result = "FAILURE"
 }
