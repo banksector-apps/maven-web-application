@@ -35,7 +35,7 @@ node{
 */
 }//try closing
 catch(e){
-currentBuild.result = "SUCCESS"
+currentBuild.result = "FAILURE"
 }
 finally{
 sendSlackNotifications('currentBuild.result')
